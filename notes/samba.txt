@@ -1,0 +1,14 @@
+yum install samba* -y
+vim /etc/samba/smb.conf
+[sharename]
+      path = /{路径}
+      writeable = yes
+      write list = username，@usergroup    //指定允许列表
+      valid users = username   //允许列表用户访问
+mkdir/road
+chmod 777 /road
+systemctl restart smb
+systemctl stop firewalld
+setenforce 0
+useradd username
+smbpassswd -a username

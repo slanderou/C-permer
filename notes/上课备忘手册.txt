@@ -1,0 +1,24 @@
+swap：给物理内存1.5或2倍，交换分区，用于在其他磁盘内存不够时腾出位置。
+raid0：将多个磁盘合并成一个大的磁盘，不具有冗余，并行I/O，速度最快
+raid1：镜像卷，互为镜像，当任一磁盘出现故障时，可以利用其镜像上的数据
+恢复，提高系统的容错能力。磁盘利用率只有50%。前提：两块磁盘大小一致
+raid5：允许单个磁盘出错，将数据段的校验位交互放在各个硬盘上。任何一个硬盘
+损坏，都可以根据其他硬盘上的校验位来重建损坏的数据。硬盘的利用率为n-1.
+/etc/passwd:保存用户账户
+/etc/shadow:保存账户密码
+/etc/group:保存用户组
+安装包后缀：deb/rpm
+vi /etc/sysconfig/network-scripts/ifcfg-ens33
+确认：Ethernet，none，no，static，yes，no，yes，yes，yes
+，no，stable-privacy，ens33，ens33，yes
+更改：BOOTPROTO=static
+增加：ONBOOT=yes
+IPADDR=192.168.200.29
+NETMASK=255.255.255.0
+GATEWAY=192.168.200.254
+DNS1=172.16.1.1
+重启网卡：systemctl restart NetworkManager
+nmcli networking off
+nmcli networking on
+
+

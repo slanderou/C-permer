@@ -1,0 +1,78 @@
+yum install mariadb* -y
+firewall-cmd --per --add-service={指定服务}
+                                       -port={端口号/tcp}
+                              --remove
+firewall-cmd --reload
+firewall-cmd --list-all
+--add添加 --remove移除 -service服务 -port端口
+systemctl restart mariadb
+mysqladmin -u用户名 -p旧密码 password 新密码   
+set password=PASSWORD（’{加密密码}‘）;
+mysql_secure_installation
+1,设置密码值（回车）
+2，是否设置密码（yes）
+3，yes
+4，yes
+5，yes
+6，yes
+mysqu -u root -p
+-u：指定登录用户
+-p：验证用户在数据库中的密码值
+grant all privileges on *.* to 'root'@'%' identified by 'password'
+with grant option;                                        //允许root远程登录
+show databases; 
+create user {username@localhost} identified by 'password';         //创建用户密文加密密码
+use mysql
+select HOST,USER,PASSWORD from user where user='username' //查看用户
+查询：show databases {name};
+create database {name};
+use {name};
+create table {table name} (name int (33),age float);  //(字段名称，字段类型)
+alter table {tablename} add {字段名称 字段类型}； //增加字段
+alter table {tablename} drop {字段名称};                  //删除字段
+alter table {tablename} modify {字段名称 数据类型}；     //修改字段数据类型
+alter table {tablename} change {旧字段} {新字段} {新类型}   //修改字段名称
+alter table {tablename} modify {字段名称} primary key；        //更改为主键
+alter table {tablename} modify {字段名称 数据类型} auto_increment;       //更改为自增
+alter table {tablename} modify {字段1名称 数据类型} first/after {字段2名称}  //排列字段
+primary key auto_increment 设置主键和自增
+desc {tablename} 验证主键和自增
+insert into {tablename}{(linename,linename)} values('content','content');
+select * from {table name};                                                //查询表单
+select {columnname} from {tablename};
+select * from {tablename} where {linename}='content';
+delete from {tablename} where {linename}='content';                       //删除表单中内容
+update {tablename} set {columnname}='content' where {columnname}='content';    //修改表单中内容
+grant {SELECT},{UPDATE},{DELETE},{INSERT} ON 
+{databasename}.{tablename} TO {username}@localhost；                //增加用户权限
+revoke 参照grant命令  但是to改成from                                                      //删除用户权限
+show grants for {username}@localhost;                                      //查看用户权限
+update {tablename} set password=PASSWORD('{指定字段}')    //给某个字段加密
+mysqldump -u root -p {tablename} > {road};                 //备份到指定路径(在外面打)
+     -A 备份全部数据库
+     -d 备份结构
+     -t  备份数据
+crontab -e                                                              //编辑时间表(在外面打)
+{分钟}         {小时}           {一个月第几天}         {月份}       {周几} 
+mysqldump -u {username} -p {databasename} {tablename} > {road}       // 编辑内容
+crontab -l                                                      //查看时间表      
+/var/spool/cron/{*}                                       //真实路径
+drop database {tablename}                                       //删除表单
+mysql -u root -p {tablename} < {road}                        //恢复表单
+where 命令参数
+= 等于
+!= 不等于
+> 大于
+< 小于
+>= 大于等于
+<= 小于等于
+between 在某个范围
+like 搜索一个例子
+in  在列中搜索多个值
+
+查询mysql数据库中的表单属性列
+show columns from {table name};
+
+
+
+
