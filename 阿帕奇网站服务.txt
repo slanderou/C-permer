@@ -1,0 +1,26 @@
+下载依赖：yum install httpd* -y
+启动服务：systemctl start httpd
+查看服务状态：systemctl status httpd
+手动获取主机dns改成服务器的
+配置正反向文件
+查看详细文件：vim /etc/httpd/conf/httpd.conf
+：set nu   //显示行号
+123 documentroot"{指定的根目录}"
+进入配置文件
+45 Listen 80    //通过80端口来进行访问
+46 Listen {要添加的端口}    //添加要用的端口
+一定要打一个回车
+359<virtualhost *:80>       //允许所有虚拟主机使用80端口
+360servername  {域名}         //
+361documentroot {指定目录}    //指定根目录
+362<directory {指定目录}>
+363                AllowOverride None   //允许所有人都可以编写根路径     （少加点空格）
+364                require all granted      //允许所有人都可以访问
+365 </directory>
+363</virtualhost>               //
+/DirectoryIndex                       //更改主页名称
+删除几行空行
+给353行附近没有#号的行加个#
+363和364行的空格少打点
+systemctl restart httpd  //重启httpd服务
+curl {域名}

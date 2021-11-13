@@ -1,0 +1,50 @@
+下载服务：yum install vsftpd* ftp* -y
+重启服务：systemctl restart vsftpd
+vi /etc/vsftpd/vsftpd.conf
+写入：   local_root=/ftp               //指定一个存放目录
+或者：   guest_enable=yes         //允许虚拟用户登录
+             guest_username=xuni     //指定一个符号
+             user_config_dir=xuni    //指定存放虚拟用户配置文件    一个用户对应一个文件，都在这个目录下
+             allow_writeable_chroot=yes
+cd /                      
+mkdir ftp
+chmod 777 /ftp
+vi /etc/vsftpd/xuni
+db_load -T -t hash -f xuni xuni.db
+vi /etc/pam.d/vsftpd
+把原先的所有行数前加上#号
+auth required pam_userdb.so db=/etc/vsftpd/xuni                  //指向并认证数据库文件
+account required pam_userdb.so db=/etc/vsftpd/xuni
+mkdir /xuni         
+chmod 777 /xuni                                   //创建用户配置文件，给777
+cd /xuni
+vi {username}
+local_root=/{homeroad}                  //用户家目录（两个用户可以共用一个）
+anon_download_enable=yes                //下载权限
+anon_upload_enable=yes                       //上传权限
+anon_mkdir_write_enable=yes                //读写权限
+anon_other_write_enable=yes                   //删除权限
+mkdir /etc/{name}
+chmod 777 /etc/{name}                             //创建家目录给777
+useradd {用户名}/xuni
+passwd {密码}
+ftp {服务器ip}
+ftp部分重要指令：
+anonymous_enable=yes/no 是否允许匿名用户访问
+anon_upload_enable=yes/no 是否允许匿名用户上传文件
+anon_mkdir_write_enable=yes/no 是否允许匿名用户创建目录
+anon_other_write_enable=yes/no 匿名用户和虚拟用户是否拥有删除权限
+local_enable=yes/no 是否允许本地用户登陆
+write_enable=yes/no 设置全局是否可写
+anon_root=/var 指定匿名用户目录
+chroot_local_user=yes 锁定所有用户到用户主目录
+chroot_list_enable=yes/no 锁定列表中的用户到主目录,需要配合下一参数使用
+chroot_list_file=/etc/vsftpd/chroot_list 指定存储被锁定用户的列表文件位置
+chown_uploads=yes/no 匿名用户上传所有者指定功能，需要与下一参数配合使用
+chown_username=用户名 指定匿名用户上传文件的所有者
+max_clients=300 最大客户端连接数为300
+anon_max_rate=30000 匿名用户和虚拟用户限速为30K/S
+local_max_rate=30000 本地用户限速为30K/S
+max_per_ip=10 每个IP最大连接数
+listen_port=22 更改监听端口
+idle_session_timeout=300用户空闲时间为5分钟
